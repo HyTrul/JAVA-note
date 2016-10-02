@@ -1,0 +1,4 @@
+﻿在James搭建之中，发现几个问题...
+1.James2.3.2.1/Win10并不兼容(不改源码的情况下)，解决方法是用之前版本的James
+2.James成功搭建之后，刷上JavaMail的包，找了很多的实例代码。发现EmailAuthenticator认证类构造不了=、=，蛋疼啊啊
+3.Authenticator这玩意我现在也用不了(。・＿・。)ﾉ，厉害了，word apache！！~
