@@ -1,0 +1,3 @@
+﻿Java设计模式之封装算法的模板模式
+http://blog.csdn.net/songsong189/article/details/48863219
+
