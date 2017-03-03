@@ -1,0 +1,11 @@
+﻿接下来:   
+把CentOS-6.0-i386-bin-DVD.ISO文件复制到F盘（格式为ext2的盘）根目录下面;   解压CentOS-6.0-i386-bin-DVD.iso中的images文件夹，把images文件夹拷贝到F盘的根目录下。 解压CentOS-6.0-i386-bin-DVD.iso中的isolinux文件夹，把isolinux文件夹拷贝到C盘根目录下。 
+
+iso,image放到系统目录
+isolinux放到现在的系统的目录
+
+其中lost+found 是我们在Xp下面打开ext2分区时自动创建的文件夹， 不会去理会它，这里不建议删除，至于你删除了lost+found文件夹，是否能够成功安 装CentOS 6.0，不管你信不信，我反正是不信！（所以就保留吧）
+
+在xp打开ext2的时候，会出来一个lost+found文件夹，不要删除，这个文件夹有用，删了之后系统装不了
+
+1

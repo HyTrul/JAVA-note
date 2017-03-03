@@ -1,0 +1,72 @@
+﻿ 类加载器各自搜索的目录
+
+1.Bootstrap Loader（启动类加载器）：加载System.getProperty("sun.boot.class.path")所指定的路径或jar。通过System.out.println(System.getProperty("sun.boot.class.path"));打印，发现主要是“D:\Program Files\Java\jdk1.6.0_10\jre\lib”中的jar包。
+
+2.Extended Loader（标准扩展类加载器ExtClassLoader）：加载System.getProperty("java.ext.dirs")所指定的路径或jar。在使用Java运行程序时，也可以指定其搜索路径，例如：java -Djava.ext.dirs=d:\projects\testproj\classes HelloWorld。
+通过打印System.out.println(System.getProperty("java.ext.dirs"));，可以发现主要加载目录为：
+“D:\Program Files\Java\jdk1.6.0_10\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext”
+
+
+3、AppClass Loader（系统类加载器AppClassLoader）：加载System.getProperty("java.class.path")所指定的路径或jar。在使用Java运行程序时，也可以加上-cp来覆盖原有的Classpath设置，例如： java -cp ./lavasoft/classes HelloWorld
+对于eclipse，就是“.classpath”中的jar包。
+ 
+ExtClassLoader和AppClassLoader在JVM启动后，会在JVM中保存一份，并且在程序运行中无法改变其搜索路径。如果想在运行时从其他搜索路径加载类，就要产生新的类加载器。
+
+=================================================================================================
+
+引导类加载器（bootstrap class loader）：它用来加载 Java 的核心库，是用C++实现的，我们无法访问到。 
+
+扩展类加载器（extensions class loader）：它用来加载 Java 的扩展库。Java 虚拟机的实现会提供一个扩展库目录。该类加载器在此目录里面查找并加载 Java 类。是用Java来实现的。 
+
+系统类加载器（system class loader）：它根据 Java 应用的类路径（CLASSPATH）来加载 Java 类。一般来说，Java 应用的类都是由它来完成加载的。可以通过ClassLoader.getSystemClassLoader()来获取它。 
+
+一、三个加载器工作流程 
+1、一个Class加载，先从引导类加载器开始，如果引导类加载器不能加载则交给扩展加载器； 
+2、如果扩展类加载器不能加载再交给系统类加载器（也称为应用类加载器）； 
+3、直到加载成功。 
+
+二、加载器的特点 
+1、可以决定一个Class的加载过程； 
+
+2、相同全名称的两个类，可以通过使用不同加载器来共存在内存中； 
+
+3、引导类加载器很好的保护了Java核心类不受干扰；
+
+三、获取Class的加载器 
+实例： 
+Java代码  收藏代码
+package com.sean.jvm;  
+  
+public class Test01 {  
+    public static void main(String[] args) {  
+        try {  
+            Class clas1 = Class.forName("java.lang.String");  
+            Class clas2 = Class.forName("com.sean.jvm.Test01");  
+            System.out.println("clas1-->" + clas1.getClassLoader()+"就是");  
+            System.out.println("clas2-->" + clas2.getClassLoader());  
+            System.out.println("clas2的父级加载-->"+ clas2.getClassLoader().getParent());  
+            System.out.println("clas2的父级的父级加载-->"+ clas2.getClassLoader().getParent().getParent());  
+        } catch (ClassNotFoundException e) {  
+            e.printStackTrace();  
+        }  
+    }  
+}  
+
+
+输出结果： 
+clas1-->null 
+clas2-->sun.misc.Launcher$AppClassLoader@281d4b 
+clas2的父级加载-->sun.misc.Launcher$ExtClassLoader@19b5217 
+clas2的父级的父级加载-->null 
+我们可以根据java.lang.Class<T>类中的getClassLoader() API文档可知，当返回的是Null时，表示采用了引导类加载器。 
+
+四、ClassLoader的应用 
+1、可以决定自己的Class的加载过程 
+2、可以给Class加密，防止反编译 
+
+==============================================================================================
+
+
+每次方法调用都会有一个栈帧压入虚拟机栈，操作系统给JVM分配的内存是有限的，JVM分配给“虚拟机栈”的内存是有限的。
+如果方法调用过多，导致虚拟机栈满了就会溢出。
+这里栈深度就是指栈帧的数量。
